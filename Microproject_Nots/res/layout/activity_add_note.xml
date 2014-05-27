@@ -82,7 +82,7 @@
                     android:id="@+id/editTextDateAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:ems="10"
                     android:inputType="date"
                     android:visibility="gone" />
@@ -90,9 +90,9 @@
                 <ImageView
                     android:id="@+id/imageViewAddDate"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_input_add"
+                    android:layout_height="70dp"
+                    android:layout_weight="0.5"
+                    android:src="@drawable/date"
                     android:visibility="gone" />
 
             </LinearLayout>
@@ -105,17 +105,16 @@
                     android:id="@+id/editTextTimeAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:ems="10"
                     android:inputType="time"
                     android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/imageViewAddTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_input_add"
+                    android:layout_width="203dp"
+                    android:layout_height="52dp"
+                    android:src="@drawable/time"
                     android:visibility="gone" />
 
             </LinearLayout>
