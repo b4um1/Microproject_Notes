@@ -3,7 +3,7 @@
     android:id="@+id/container_addnote"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_wood"
+    android:background="@drawable/background_grey"
     tools:context="at.fh.ooe.mc.android.AddNoteActivity"
     tools:ignore="MergeRootFrame" >
 

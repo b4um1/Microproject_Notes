@@ -9,6 +9,8 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -85,6 +87,8 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 		month = cal.get(Calendar.MONTH);
 		year = cal.get(Calendar.YEAR);
 
+		ActionBar bar = getActionBar();
+		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(255, 165, 0)));
 	}
 
 	@Override
