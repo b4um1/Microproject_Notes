@@ -16,8 +16,9 @@ import at.fh.ooe.mc.android.database.DatabaseHelper;
 
 public class MainActivity extends Activity{
 	private static final String LOG_TAG = "MainActivity";
-	public DatabaseHelper mDb;
-	ListView mListView;
+	private DatabaseHelper mDb;
+	private ListView mListView;
+	private MyArrayAdapter mAdapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +32,10 @@ public class MainActivity extends Activity{
 		List<Note> list = mDb.getAllNotes();
 		
 		//set Up Adapter for List
-		MyArrayAdapter adapter = new MyArrayAdapter(this, R.layout.mainlist_layout, list, mDb);
+		mAdapter = new MyArrayAdapter(this, R.layout.mainlist_layout, list, mDb);
 				
 		mListView = (ListView)findViewById(R.id.container);
-		mListView.setAdapter(adapter);
+		mListView.setAdapter(mAdapter);
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu _menu) {
@@ -51,7 +52,6 @@ public class MainActivity extends Activity{
 	protected void onResume() {
 		//Update Listview on every resume
 		Log.i(LOG_TAG, "on Resume");
-		mListView.invalidate();
 		super.onResume();
 	}
 }
