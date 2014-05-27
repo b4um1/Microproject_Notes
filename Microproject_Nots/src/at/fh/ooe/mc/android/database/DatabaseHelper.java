@@ -64,34 +64,46 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	    }
 
 	// Get All Notes
-	    public List<Note> getAllNotes() {
-	        List<Note> notes = new LinkedList<Note>();
-	 
+	public List<Note> getAllNotes() {
+		List<Note> notes = new LinkedList<Note>();
+
+		// 1. build the query
+		String query = "SELECT  * FROM " + DATABASE_TABLE;
+
+		// 2. get reference to writable DB
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+
+		// 3. go over each row, build book and add it to list
+		Note note = null;
+		if (cursor.moveToFirst()) {
+			do {
+				note = new Note();
+				note.setId(Integer.parseInt(cursor.getString(0)));
+				note.setTitle(cursor.getString(1));
+				note.setText(cursor.getString(2));
+
+				// Add book to books
+				notes.add(note);
+			} while (cursor.moveToNext());
+		}
+
+		Log.d(LOG_TAG, "getallNotes()");
+
+		// return books
+		return notes;
+	}
+	 public Cursor getAllNotesCursor() {
 	        // 1. build the query
 	        String query = "SELECT  * FROM " + DATABASE_TABLE;
 	 
 	        // 2. get reference to writable DB
 	        SQLiteDatabase db = this.getWritableDatabase();
 	        Cursor cursor = db.rawQuery(query, null);
+	        Log.d(LOG_TAG, "getCursorof All Notes()");
 	 
-	        // 3. go over each row, build book and add it to list
-	        Note note = null;
-	        if (cursor.moveToFirst()) {
-	            do {
-	            	note = new Note();
-	            	note.setId(Integer.parseInt(cursor.getString(0)));
-	            	note.setTitle(cursor.getString(1));
-	            	note.setText(cursor.getString(2));
-	 
-	                // Add book to books
-	                notes.add(note);
-	            } while (cursor.moveToNext());
-	        }
-	 
-	        Log.d(LOG_TAG, "getallNotes()");
-	 
-	        // return books
-	        return notes;
+	        // return notes
+	        return cursor;
 	    }
 
 	public void delete(long id) {
