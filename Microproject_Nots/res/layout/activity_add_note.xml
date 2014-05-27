@@ -54,20 +54,32 @@
             android:layout_height="wrap_content" >
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/imageViewPhoto"
                 android:layout_width="115dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.50"
                 android:src="@drawable/photo" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/imageViewReminder"
                 android:layout_width="111dp"
                 android:layout_height="111dp"
                 android:layout_weight="0.5"
                 android:src="@drawable/reminder" />
 
         </LinearLayout>
+
+        <TimePicker
+            android:id="@+id/timePicker1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <DatePicker
+            android:id="@+id/datePicker1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/imageViewSave"
