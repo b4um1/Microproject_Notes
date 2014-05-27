@@ -29,7 +29,7 @@ public class MainActivity extends Activity{
 		
 		List<Note> list = mDb.getAllNotes();
 		
-		MyArrayAdapter adapter = new MyArrayAdapter(this, R.layout.mainlist_layout, list,mDb);
+		MyArrayAdapter adapter = new MyArrayAdapter(this, R.layout.mainlist_layout, list, mDb);
 		
 		ListView v = (ListView)findViewById(R.id.container);
 		v.setAdapter(adapter);
@@ -44,7 +44,6 @@ public class MainActivity extends Activity{
 		Toast.makeText(getApplicationContext(), _item.getTitle(),
 				Toast.LENGTH_SHORT).show();
 		Intent i = new Intent (this,AddNoteActivity.class);
-		i.putExtra("db", mDb);
 		this.startActivity(i);
 		return super.onOptionsItemSelected(_item);
 	}

@@ -1,6 +1,5 @@
 package at.fh.ooe.mc.android.database;
 
-import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import at.fh.ooe.mc.android.Note;
 
-public class DatabaseHelper extends SQLiteOpenHelper implements Serializable{
+public class DatabaseHelper extends SQLiteOpenHelper{
 	
 	private final static String LOG_TAG = "DatabaseHelper";
 	public static final String KEY_ROWID = "_id";
