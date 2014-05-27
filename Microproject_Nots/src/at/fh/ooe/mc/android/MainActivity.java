@@ -25,9 +25,9 @@ public class MainActivity extends Activity{
 		mDb = new DatabaseHelper(this);
 		
 		//add Notes
-		//mDb.addNote(new Note ("Titel 1", "Note blabldaslkfjaslf"));
-		//mDb.addNote(new Note ("Titel 2", "Note blabldaslkfjaslf"));
-		//mDb.addNote(new Note ("Titel 3", "Note blabldaslkfjaslf"));
+		mDb.addNote(new Note ("Titel 1", "Note blabldaslkfjaslf"));
+		mDb.addNote(new Note ("Titel 2", "Note blabldaslkfjaslf"));
+		mDb.addNote(new Note ("Titel 3", "Note blabldaslkfjaslf"));
 		
 		List<Note> list = mDb.getAllBooks();
 		
