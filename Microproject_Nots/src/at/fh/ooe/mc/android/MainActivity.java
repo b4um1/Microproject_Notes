@@ -23,7 +23,7 @@ public class MainActivity extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.main_listview);
 		
 		//set Up Database
 		mDb = new DatabaseHelper(this);
@@ -34,7 +34,7 @@ public class MainActivity extends Activity{
 		//set Up Adapter for List
 		mAdapter = new MyArrayAdapter(this, R.layout.mainlist_layout, list, mDb);
 				
-		mListView = (ListView)findViewById(R.id.container);
+		mListView = (ListView)findViewById(R.id.ListView1);
 		mListView.setAdapter(mAdapter);
 	}
 	@Override
@@ -50,7 +50,10 @@ public class MainActivity extends Activity{
 	}
 	@Override
 	protected void onResume() {
-		//Update Listview on every resume
+		ListView listview = (ListView)findViewById(R.id.ListView1);
+		MyArrayAdapter adapter = (MyArrayAdapter) listview.getAdapter();
+		adapter.refill(mDb.getAllNotes());
+		
 		Log.i(LOG_TAG, "on Resume");
 		super.onResume();
 	}
