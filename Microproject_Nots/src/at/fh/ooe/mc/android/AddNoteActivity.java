@@ -5,9 +5,11 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,18 +33,25 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 	EditText editTextTitle;
 	EditText editTextText;
 	
+	EditText editTextDateAdd;
+	EditText editTextTimeAdd;
+	
+	ImageView imageViewDateAdd;
+	ImageView imageViewTimeAdd;
+	
 	TimePicker timePicker;
 	DatePicker datePicker;
-	
+
 	private TextView tvDisplayTime;
 	private TimePicker timePicker1;
 	private Button btnChangeTime;
- 
-	private int hour;
-	private int minute;
- 
-	static final int TIME_DIALOG_ID = 999;
-	
+
+	private String date;
+
+	private Calendar cal;
+	private int day;
+	private int month;
+	private int year;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,42 +67,69 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 		ImageView imageViewSave = (ImageView) findViewById(R.id.imageViewSave);
 		imageViewSave.setOnClickListener(this);
 		
-		timePicker = (TimePicker) findViewById(R.id.timePicker1);
-		datePicker = (DatePicker) findViewById(R.id.datePicker1);
+		editTextDateAdd = (EditText) findViewById(R.id.editTextDateAdd);
+		editTextTimeAdd = (EditText) findViewById(R.id.editTextTimeAdd);
+		
+		imageViewDateAdd = (ImageView) findViewById(R.id.imageViewAddDate);
+		imageViewDateAdd.setOnClickListener(this);
+		imageViewTimeAdd = (ImageView) findViewById(R.id.imageViewAddTime);
+		imageViewTimeAdd.setOnClickListener(this);
 
 		editTextTitle = (EditText) findViewById(R.id.editTextTitle);
 		editTextText = (EditText) findViewById(R.id.editTextText);
 
+		cal = Calendar.getInstance();
+		day = cal.get(Calendar.DAY_OF_MONTH);
+		month = cal.get(Calendar.MONTH);
+		year = cal.get(Calendar.YEAR);
+
 	}
-	
-	
 
 	@Override
 	public void onClick(View _v) {
 		switch (_v.getId()) {
 		case R.id.imageViewSave:
 			DatabaseHelper helper = new DatabaseHelper(this);
-			helper.addNote(new Note(editTextTitle.getText().toString(), editTextText.getText().toString()));
-			
+			helper.addNote(new Note(editTextTitle.getText().toString(),
+					editTextText.getText().toString()));
+
 			finish();
 			break;
 		case R.id.imageViewPhoto:
 
 			break;
 		case R.id.imageViewReminder:
-//			if (timePicker.getVisibility() == View.GONE) {
-//				timePicker.setVisibility(View.VISIBLE);
-//			} else {
-//				timePicker.setVisibility(View.GONE);
-//			}
 			
-			if (datePicker.getVisibility() == View.GONE) {
-				datePicker.setVisibility(View.VISIBLE);
+			if (editTextDateAdd.getVisibility() == View.GONE) {
+				editTextDateAdd.setVisibility(View.VISIBLE);
+				imageViewDateAdd.setVisibility(View.VISIBLE);
+				editTextTimeAdd.setVisibility(View.VISIBLE);
+				imageViewTimeAdd.setVisibility(View.VISIBLE);
 			} else {
-				datePicker.setVisibility(View.GONE);
+				editTextDateAdd.setVisibility(View.GONE);
+				imageViewDateAdd.setVisibility(View.GONE);
+				editTextTimeAdd.setVisibility(View.GONE);
+				imageViewTimeAdd.setVisibility(View.GONE);
 			}
-			
+
 			break;
+		case R.id.imageViewAddDate:
+			showDialog(0);
 		}
 	}
+
+	@Override
+	@Deprecated
+	protected Dialog onCreateDialog(int id) {
+		return new DatePickerDialog(this, datePickerListener, year, month, day);
+	}
+
+	private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+		public void onDateSet(DatePicker view, int selectedYear,
+				int selectedMonth, int selectedDay) {
+			date = selectedDay + " / " + (selectedMonth + 1) + " / "
+					+ selectedYear;
+		}
+	};
+
 }
