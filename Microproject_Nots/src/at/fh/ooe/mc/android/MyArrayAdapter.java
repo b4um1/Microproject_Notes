@@ -56,7 +56,7 @@ class MyArrayAdapter extends ArrayAdapter<Note> {
 				public void onClick(View arg0) {
 					Log.i(LOG_TAG, "try to delete "+element.getTitle());
 					mDb.delete(element.getId());
-					mContext.recreate();
+					//mContext.recreate();
 				}
 
 			});
@@ -66,7 +66,7 @@ class MyArrayAdapter extends ArrayAdapter<Note> {
 	
 	@Override
 	public void notifyDataSetChanged() {
-		// TODO Auto-generated method stub
+		Log.i(LOG_TAG, "Data set changed");
 		super.notifyDataSetChanged();
 	}
 }
