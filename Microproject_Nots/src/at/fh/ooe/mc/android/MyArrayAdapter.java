@@ -63,4 +63,10 @@ class MyArrayAdapter extends ArrayAdapter<Note> {
 		}
 		return _convertView;
 	}
+	
+	@Override
+	public void notifyDataSetChanged() {
+		// TODO Auto-generated method stub
+		super.notifyDataSetChanged();
+	}
 }

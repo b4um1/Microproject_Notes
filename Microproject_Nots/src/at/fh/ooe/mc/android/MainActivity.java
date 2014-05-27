@@ -15,14 +15,12 @@ import at.fh.ooe.mc.androi.R;
 import at.fh.ooe.mc.android.database.DatabaseHelper;
 
 public class MainActivity extends Activity{
-	public DatabaseHelper mDb;
+	public DatabaseHelper mDb = new DatabaseHelper(this);;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		mDb = new DatabaseHelper(this);
 		
 		//add Notes
 		//mDb.addNote(new Note ("Titel 1", "Note blabldaslkfjaslf"));
@@ -46,6 +44,7 @@ public class MainActivity extends Activity{
 		Toast.makeText(getApplicationContext(), _item.getTitle(),
 				Toast.LENGTH_SHORT).show();
 		Intent i = new Intent (this,AddNoteActivity.class);
+		i.putExtra("db", mDb);
 		this.startActivity(i);
 		return super.onOptionsItemSelected(_item);
 	}

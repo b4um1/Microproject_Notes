@@ -1,5 +1,6 @@
 package at.fh.ooe.mc.android;
 
+
 public class Note {
 	private int id;
 	private String title;
