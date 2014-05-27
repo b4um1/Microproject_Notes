@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import at.fh.ooe.mc.androi.R;
 import at.fh.ooe.mc.android.database.DatabaseHelper;
 
@@ -54,16 +55,23 @@ class MyArrayAdapter extends ArrayAdapter<Note> {
 			image.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					Log.i(LOG_TAG, "try to delete "+element.getTitle());
+					Log.i(LOG_TAG, "try to delete " + element.getTitle());
 					mDb.delete(element.getId());
-					//mContext.recreate();
+					refill(mDb.getAllNotes());
 				}
 
 			});
 		}
 		return _convertView;
 	}
-	
+
+	public void refill(List<Note> _list) {
+		mList.clear();
+		mList.addAll(_list);
+		notifyDataSetChanged();
+		Toast.makeText(getContext(), "Notiz wurde erfolgreich gelöscht", Toast.LENGTH_SHORT).show();
+	}
+
 	@Override
 	public void notifyDataSetChanged() {
 		Log.i(LOG_TAG, "Data set changed");

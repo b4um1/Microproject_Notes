@@ -74,7 +74,6 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 		case R.id.imageViewSave:
 			DatabaseHelper helper = new DatabaseHelper(this);
 			helper.addNote(new Note(editTextTitle.getText().toString(), editTextText.getText().toString()));
-			
 			finish();
 			break;
 		case R.id.imageViewPhoto:
