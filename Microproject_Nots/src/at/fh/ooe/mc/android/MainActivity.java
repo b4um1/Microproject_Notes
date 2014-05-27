@@ -1,7 +1,8 @@
 
 package at.fh.ooe.mc.android;
 
-import java.util.ArrayList;
+
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,23 +12,26 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 import at.fh.ooe.mc.androi.R;
+import at.fh.ooe.mc.android.database.DatabaseHelper;
 
 public class MainActivity extends Activity{
-
+	public DatabaseHelper mDb;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		ArrayList<Note> list = new ArrayList<Note>();
-		Note c1 = new Note ("Titel 1", "Note blabldaslkfjaslf");
-		Note c2 = new Note ("Titel 2", "Note blabldaslkfjaslf");
-		Note c3 = new Note ("Titel 3", "Note blabldaslkfjaslf");
-		list.add(c1);
-		list.add(c2);
-		list.add(c3);
+		mDb = new DatabaseHelper(this);
 		
-		MyArrayAdapter adapter = new MyArrayAdapter(this, R.layout.mainlist_layout, list);
+		//add Notes
+		//mDb.addNote(new Note ("Titel 1", "Note blabldaslkfjaslf"));
+		//mDb.addNote(new Note ("Titel 2", "Note blabldaslkfjaslf"));
+		//mDb.addNote(new Note ("Titel 3", "Note blabldaslkfjaslf"));
+		
+		List<Note> list = mDb.getAllBooks();
+		
+		MyArrayAdapter adapter = new MyArrayAdapter(this, R.layout.mainlist_layout, list,mDb);
 		
 		ListView v = (ListView)findViewById(R.id.container);
 		v.setAdapter(adapter);
