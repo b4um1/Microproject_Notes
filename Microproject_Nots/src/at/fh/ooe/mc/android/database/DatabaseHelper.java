@@ -64,7 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    }
 
 	// Get All Notes
-	    public List<Note> getAllBooks() {
+	    public List<Note> getAllNotes() {
 	        List<Note> notes = new LinkedList<Note>();
 	 
 	        // 1. build the query
