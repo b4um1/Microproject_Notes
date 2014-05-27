@@ -19,17 +19,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import at.fh.ooe.mc.androi.R;
+import at.fh.ooe.mc.android.database.DatabaseHelper;
 
 class MyArrayAdapter extends ArrayAdapter<Note> {
 	private final String LOG_TAG = "ArrayAdapter";
 	List<Note> mList;
 	Activity mContext;
+	DatabaseHelper mDb;
 
 	public MyArrayAdapter(Activity _activity, int _textViewResourceId,
-			List<Note> _objects) {
+			List<Note> _objects, DatabaseHelper _db) {
 		super(_activity.getApplicationContext(), _textViewResourceId, _objects);
 		mList = _objects;
 		mContext = _activity;
+		mDb = _db;
 	}
 
 	@Override
@@ -42,7 +45,6 @@ class MyArrayAdapter extends ArrayAdapter<Note> {
 		}
 		final Note element = mList.get(_position);
 		if (element != null) {
-			final int pos = _position;
 			TextView v = (TextView) _convertView
 					.findViewById(R.id.textView_title);
 			v.setText(element.getTitle());
@@ -53,7 +55,7 @@ class MyArrayAdapter extends ArrayAdapter<Note> {
 				@Override
 				public void onClick(View arg0) {
 					Log.i(LOG_TAG, "try to delete "+element.getTitle());
-					mList.remove(pos);
+					mDb.delete(element.getId());
 					mContext.recreate();
 				}
 
