@@ -23,42 +23,50 @@
 
                 <TextView
                     android:id="@+id/textView_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
                     android:text="Large Text"
-                    android:textStyle="bold"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#0EBFE9" />
+                    android:textColor="#0EBFE9"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textView_message_prev"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
                     android:text="Small Text"
-                    android:textColor="#cec5fa" 
-                    android:textStyle="italic"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#cec5fa"
+                    android:textStyle="italic" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1.2"
+                android:text="date"
+                android:textColor="#cec5fa"
+                android:textStyle="italic" />
 
             <ImageView
                 android:id="@+id/imageView_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_weight="0.06"
                 android:src="@drawable/ic_menu_delete" />
 
             <ImageView
                 android:id="@+id/imageView_go"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_weight="0.05"
                 android:src="@drawable/ic_go" />
-
         </LinearLayout>
-
     </LinearLayout>
 
 </FrameLayout>
