@@ -3,6 +3,7 @@ package at.fh.ooe.mc.android;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector.OnGestureListener;
@@ -51,11 +52,15 @@ public class ShowSpecialNote extends Activity implements OnGestureListener,
 		//load Note(id) from database
 		mNote = mDb.getNote((int) id);
 		
+		Typeface tf = Typeface.createFromAsset(getAssets(),
+                "fonts/GoodDog.otf");
 		EditText view = (EditText) findViewById(R.id.editText_title);
 		view.setText(mNote.getTitle());
+		view.setTypeface(tf);
 		
 		view = (EditText) findViewById(R.id.editText_message);
 		view.setText(mNote.getText());
+		view.setTypeface(tf);
 		
 	}
 

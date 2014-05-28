@@ -9,13 +9,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/background_detail"
         android:orientation="vertical" >
 
         <EditText
             android:id="@+id/editText_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:ems="10" >
+            android:ems="10"
+            android:textColor="#2a2a2a"
+            android:textSize="40sp"
+            android:textStyle="bold" >
 
             <requestFocus />
         </EditText>
@@ -26,7 +30,9 @@
             android:layout_height="fill_parent"
             android:layout_weight="0.5"
             android:ems="10"
-            android:gravity="top" />
+            android:gravity="top"
+            android:textColor="#2a2a2a"
+            android:textSize="35sp" />
 
         <ImageView
             android:id="@+id/imageView_pic"
@@ -53,9 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/cancel" />
-
         </LinearLayout>
-
     </LinearLayout>
 
 </FrameLayout>

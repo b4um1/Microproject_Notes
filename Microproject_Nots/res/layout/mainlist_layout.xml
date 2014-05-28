@@ -50,6 +50,13 @@
                 android:layout_weight="0.06"
                 android:src="@drawable/ic_menu_delete" />
 
+            <ImageView
+                android:id="@+id/imageView_go"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="0.05"
+                android:src="@drawable/ic_go" />
+
         </LinearLayout>
 
     </LinearLayout>
