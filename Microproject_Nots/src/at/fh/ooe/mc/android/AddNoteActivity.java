@@ -6,10 +6,17 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.app.ActionBar;
+import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -70,6 +77,8 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 	private int selectedYear;
 	private int selectedHour;
 	private int selectedMin;
+
+	AlarmManager mgr;
 
 	private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
 		public void onDateSet(DatePicker view, int selYear, int selMonth,
@@ -139,13 +148,15 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 		year = cal.get(Calendar.YEAR);
 		hour = cal.get(Calendar.HOUR_OF_DAY);
 		min = cal.get(Calendar.MINUTE);
+
+		mgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 	}
 
 	@Override
 	public void onClick(View _v) {
 		switch (_v.getId()) {
 		case R.id.imageViewSave:
-
+			boolean reminderSet = false;
 			if (textViewAddDate.getText().equals("")
 					^ textViewAddTime.getText().equals("")) {
 				Toast.makeText(
@@ -153,55 +164,62 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 						"Please set Date AND Time at the reminder before you save the note!",
 						2000).show();
 			} else {
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(new Date()); // heute
-				int currentYear = cal.get(Calendar.YEAR);
-				int currentMonth = cal.get(Calendar.MONTH) + 1;
-				int currentDay = cal.get(Calendar.DAY_OF_MONTH);
-				int currentHour = cal.get(Calendar.HOUR);
-				int currentMinute = cal.get(Calendar.MINUTE);
-				int currentAMPM = cal.get(Calendar.AM_PM);
-
 				boolean isPast = false;
 				boolean sameDate = false;
 
-				if (selectedYear < currentYear) {
-					isPast = true;
-				} else {
-					if (selectedYear == currentYear) {
-						if (selectedMonth < currentMonth) {
-							isPast = true;
-						} else {
-							if (selectedMonth == currentMonth) {
-								if (selectedDay < currentDay) {
-									isPast = true;
-								} else {
-									if (selectedDay == currentDay) {
-										sameDate = true;
-									}
-								}
-							}
-						}
-					}
-				}
+				if (!(textViewAddDate.getText().equals("") && textViewAddTime
+						.getText().equals(""))) {
 
-				if (!isPast) {
-					if (sameDate) {
-						sameDate = false;
-						if (selectedHour < currentHour) {
-							isPast = true;
-						} else {
-							if (selectedHour == currentHour) {
-								if (selectedMin < currentMinute) {
-									isPast = true;
-								} else {
-									if (selectedMin == currentMinute) {
-										sameDate = true;
+					reminderSet = true;
+
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(new Date()); // heute
+					int currentYear = cal.get(Calendar.YEAR);
+					int currentMonth = cal.get(Calendar.MONTH) + 1;
+					int currentDay = cal.get(Calendar.DAY_OF_MONTH);
+					int currentHour = cal.get(Calendar.HOUR);
+					int currentMinute = cal.get(Calendar.MINUTE);
+					int currentAMPM = cal.get(Calendar.AM_PM);
+
+					if (selectedYear < currentYear) {
+						isPast = true;
+					} else {
+						if (selectedYear == currentYear) {
+							if (selectedMonth < currentMonth) {
+								isPast = true;
+							} else {
+								if (selectedMonth == currentMonth) {
+									if (selectedDay < currentDay) {
+										isPast = true;
+									} else {
+										if (selectedDay == currentDay) {
+											sameDate = true;
+										}
 									}
 								}
 							}
 						}
 					}
+
+					if (!isPast) {
+						if (sameDate) {
+							sameDate = false;
+							if (selectedHour < currentHour) {
+								isPast = true;
+							} else {
+								if (selectedHour == currentHour) {
+									if (selectedMin < currentMinute) {
+										isPast = true;
+									} else {
+										if (selectedMin == currentMinute) {
+											sameDate = true;
+										}
+									}
+								}
+							}
+						}
+					}
+
 				}
 
 				if (isPast || sameDate) {
@@ -211,8 +229,36 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 							2000).show();
 				} else {
 					DatabaseHelper helper = new DatabaseHelper(this);
-					helper.addNote(new Note(editTextTitle.getText().toString(),
-							editTextText.getText().toString()));
+
+					Note note = new Note();
+					note.setTitle(editTextTitle.getText().toString());
+					note.setText(editTextText.getText().toString());
+					if (reminderSet) {
+						note.setDate(selectedDay + "/" + selectedMonth + "/"
+								+ selectedYear + "/" + selectedHour + "/"
+								+ selectedMin);
+
+						// Intent i = new Intent(this.getApplicationContext(),
+						// NotificationActivity.class);
+						// PendingIntent pi = PendingIntent.getActivity(this, 0,
+						// i, 0);
+						// mgr.set(AlarmManager.RTC_WAKEUP,
+						// System.currentTimeMillis() + 10000, pi);
+
+//						Intent myIntent = new Intent(ThisApp.this , myService.class);     
+//					       AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+//					       pendingIntent = PendingIntent.getService(ThisApp.this, 0, myIntent, 0);
+//
+//					       Calendar calendar = Calendar.getInstance();
+//					           calendar.set(Calendar.HOUR_OF_DAY, 12);
+//					       calendar.set(Calendar.MINUTE, 00);
+//					       calendar.set(Calendar.SECOND, 00);
+//
+//					      alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24*60*60*1000 , pendingIntent);
+
+					}
+					helper.addNote(note);
+
 					finish();
 				}
 			}

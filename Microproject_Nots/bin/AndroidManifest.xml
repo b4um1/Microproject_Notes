@@ -20,6 +20,10 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <receiver
+            android:name="be.menis.timesheet.service.AlarmReceiver"
+            android:process=":remote" />
+
         <activity
             android:name="at.fh.ooe.mc.android.MainActivity"
             android:label="@string/app_name" >
@@ -40,6 +44,10 @@
         <activity
             android:name="at.fh.ooe.mc.android.ShowSpecialNote"
             android:label="@string/title_activity_show_special_note" >
+        </activity>
+        <activity
+            android:name="at.fh.ooe.mc.android.NotificationActivity"
+            android:label="@string/title_activity_notification" >
         </activity>
     </application>
 

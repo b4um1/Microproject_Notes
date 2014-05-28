@@ -17,7 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String KEY_ROWID = "_id";
 	public static final String KEY_TITLE = "notetitle";
 	public static final String KEY_MESSAGE = "notemessage";
-	public static final String KEY_DATE = "notedate";
+	public static final String KEY_DATE = "notedate"; // day/month/year/hour/min
 	public static final String KEY_PICLINK = "notepiclink";
 
 	private static final String[] COLUMNS = { KEY_ROWID, KEY_TITLE,
