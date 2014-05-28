@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.Telephony.Sms.Conversations;
 import android.sax.StartElementListener;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,7 +36,13 @@ class MyArrayAdapter extends ArrayAdapter<Note> {
 		mContext = _activity;
 		mDb = _db;
 	}
-
+	
+	@Override
+	public long getItemId(int _position) {
+		final Note element = mList.get(_position);
+		return element.getId();
+	}
+	
 	@Override
 	public View getView(int _position, View _convertView, ViewGroup _parent) {
 		if (_convertView == null) {
@@ -45,11 +52,14 @@ class MyArrayAdapter extends ArrayAdapter<Note> {
 			_convertView = inflater.inflate(R.layout.mainlist_layout, null);
 		}
 		final Note element = mList.get(_position);
-		if (element != null) {
+		if (element != null) {			
 			TextView v = (TextView) _convertView
 					.findViewById(R.id.textView_title);
 			v.setText(element.getTitle());
-
+			
+			v = (TextView) _convertView.findViewById(R.id.textView_message_prev);
+			v.setText(element.getText());
+			
 			ImageView image = (ImageView) _convertView
 					.findViewById(R.id.imageView_delete);
 			image.setOnClickListener(new OnClickListener() {

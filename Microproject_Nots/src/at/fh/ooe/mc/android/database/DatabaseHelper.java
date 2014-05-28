@@ -11,13 +11,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import at.fh.ooe.mc.android.Note;
 
-public class DatabaseHelper extends SQLiteOpenHelper{
-	
+public class DatabaseHelper extends SQLiteOpenHelper {
+
 	private final static String LOG_TAG = "DatabaseHelper";
 	public static final String KEY_ROWID = "_id";
 	public static final String KEY_TITLE = "notetitle";
 	public static final String KEY_MESSAGE = "notemessage";
 	public static final String KEY_DATE = "notedate";
+	private static final String[] COLUMNS = {KEY_ROWID,KEY_TITLE,KEY_MESSAGE, KEY_DATE};
+	
 	public static final String DATABASE_NAME = "notesdb";
 	public static final String DATABASE_TABLE = "TextNote";
 	public static final int DATABASE_VERSION = 1;
@@ -43,25 +45,59 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		onCreate(db);
 
 	}
+
+	public void addNote(Note note) {
+		Log.d("DatabaseHelper", note.toString());
+		// 1. get reference to writable DB
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		// 2. create ContentValues to add key "column"/value
+		ContentValues values = new ContentValues();
+		values.put(KEY_TITLE, note.getTitle()); // get title
+		values.put(KEY_MESSAGE, note.getText()); // get author
+
+		// 3. insert
+		db.insert(DATABASE_TABLE, // table
+				null, // nullColumnHack
+				values); // key/value -> keys = column names/ values = column
+							// values
+
+		// 4. close
+		db.close();
+	}
 	
-	 public void addNote(Note note){
-	        Log.d("DatabaseHelper", note.toString());
-	        // 1. get reference to writable DB
-	        SQLiteDatabase db = this.getWritableDatabase();
+	public Note getNote(int id){
+		 
+	    // 1. get reference to readable DB
+	    SQLiteDatabase db = this.getReadableDatabase();
 	 
-	        // 2. create ContentValues to add key "column"/value
-	        ContentValues values = new ContentValues();
-	        values.put(KEY_TITLE, note.getTitle()); // get title 
-	        values.put(KEY_MESSAGE, note.getText()); // get author
+	    // 2. build query
+	    Cursor cursor = 
+	            db.query(DATABASE_TABLE, // a. table
+	            COLUMNS, // b. column names
+	            " _id = ?", // c. selections 
+	            new String[] { String.valueOf(id) }, // d. selections args
+	            null, // e. group by
+	            null, // f. having
+	            null, // g. order by
+	            null); // h. limit
 	 
-	        // 3. insert
-	        db.insert(DATABASE_TABLE, // table
-	                null, //nullColumnHack
-	                values); // key/value -> keys = column names/ values = column values
+	    // 3. if we got results get the first one
+	    if (cursor != null)
+	        cursor.moveToFirst();
 	 
-	        // 4. close
-	        db.close(); 
-	    }
+	    // 4. build note object
+	    Note note = new Note();
+	    note.setId(Integer.parseInt(cursor.getString(0)));
+	    note.setTitle(cursor.getString(1));
+	    note.setText(cursor.getString(2));
+	 
+	    //log 
+	Log.d("getBook("+id+")", note.toString());
+	 
+	    // 5. return note
+	    return note;
+	}
 
 	// Get All Notes
 	public List<Note> getAllNotes() {
@@ -93,18 +129,19 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		// return books
 		return notes;
 	}
-	 public Cursor getAllNotesCursor() {
-	        // 1. build the query
-	        String query = "SELECT  * FROM " + DATABASE_TABLE;
-	 
-	        // 2. get reference to writable DB
-	        SQLiteDatabase db = this.getWritableDatabase();
-	        Cursor cursor = db.rawQuery(query, null);
-	        Log.d(LOG_TAG, "getCursorof All Notes()");
-	 
-	        // return notes
-	        return cursor;
-	    }
+
+	public Cursor getAllNotesCursor() {
+		// 1. build the query
+		String query = "SELECT  * FROM " + DATABASE_TABLE;
+
+		// 2. get reference to writable DB
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+		Log.d(LOG_TAG, "getCursorof All Notes()");
+
+		// return notes
+		return cursor;
+	}
 
 	public void delete(long id) {
 		SQLiteDatabase db = this.getReadableDatabase();
