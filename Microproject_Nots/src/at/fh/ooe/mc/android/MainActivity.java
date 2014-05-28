@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import at.fh.ooe.mc.androi.R;
 import at.fh.ooe.mc.android.database.DatabaseHelper;
+import at.fh.ooe.mc.android.model.Note;
 
 public class MainActivity extends Activity implements OnItemClickListener {
 	private static final String LOG_TAG = "MainActivity";
@@ -78,7 +79,7 @@ public class MainActivity extends Activity implements OnItemClickListener {
 		Intent i = new Intent(this,ShowSpecialNote.class);
 		i.putExtra(CLICKED_ID, id);
 		startActivity(i);
-		Toast.makeText(getApplicationContext(), "You clicked on position : " + position + " and id : " + id, 10).show();
+		//Toast.makeText(getApplicationContext(), "You clicked on position : " + position + " and id : " + id, 10).show();
 		
 	}
 }

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import at.fh.ooe.mc.androi.R;
 import at.fh.ooe.mc.android.database.DatabaseHelper;
+import at.fh.ooe.mc.android.model.Note;
 
 class MyArrayAdapter extends ArrayAdapter<Note> {
 	private final String LOG_TAG = "ArrayAdapter";
@@ -58,6 +59,7 @@ class MyArrayAdapter extends ArrayAdapter<Note> {
 			v.setText(element.getTitle());
 			
 			v = (TextView) _convertView.findViewById(R.id.textView_message_prev);
+			v.setSingleLine(true);
 			v.setText(element.getText());
 			
 			ImageView image = (ImageView) _convertView

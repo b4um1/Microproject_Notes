@@ -21,12 +21,14 @@ import at.fh.ooe.mc.androi.R;
 import at.fh.ooe.mc.androi.R.id;
 import at.fh.ooe.mc.androi.R.layout;
 import at.fh.ooe.mc.android.database.DatabaseHelper;
+import at.fh.ooe.mc.android.model.Note;
 
 public class ShowSpecialNote extends Activity implements OnGestureListener,
 		OnClickListener {
 	
 	private final static String LOG_TAG = "ShowSpecialNote";
 	private DatabaseHelper mDb;
+	private Note mNote;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +49,13 @@ public class ShowSpecialNote extends Activity implements OnGestureListener,
 		long id = getIntent().getLongExtra(MainActivity.CLICKED_ID, -1);
 		
 		//load Note(id) from database
-		Note note = mDb.getNote((int) id);
+		mNote = mDb.getNote((int) id);
 		
 		EditText view = (EditText) findViewById(R.id.editText_title);
-		view.setText(note.getTitle());
+		view.setText(mNote.getTitle());
 		
 		view = (EditText) findViewById(R.id.editText_message);
-		view.setText(note.getText());
+		view.setText(mNote.getText());
 		
 	}
 
@@ -96,8 +98,26 @@ public class ShowSpecialNote extends Activity implements OnGestureListener,
 	}
 
 	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
+	public void onClick(View _v) {
+		switch (_v.getId()){
+		case R.id.button_ssn_save:
+			EditText view = (EditText) findViewById(R.id.editText_title);
+			mNote.setTitle(view.getText().toString());
+			
+			view = (EditText) findViewById(R.id.editText_message);
+			mNote.setText(view.getText().toString());
+			
+			
+			/*
+			 * set date und set new pic ?!
+			 */
+			
+			mDb.updateBook(mNote);
+			
+			finish();
+		case R.id.button_ssn_cancel:
+			finish();
+		}
 
 	}
 }
