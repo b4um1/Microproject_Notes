@@ -36,26 +36,54 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 
 	EditText editTextTitle;
 	EditText editTextText;
-	
-	EditText editTextDateAdd;
-	EditText editTextTimeAdd;
-	
-	ImageView imageViewDateAdd;
-	ImageView imageViewTimeAdd;
-	
+
+	TextView textViewAddTime;
+	TextView textViewAddDate;
+	TextView textViewremindMeAt;
+
+	ImageView imageViewAddDate;
+	ImageView imageViewAddTime;
+
+	ImageView imageViewDeleteReminder;
+
 	TimePicker timePicker;
 	DatePicker datePicker;
 
-	private TextView tvDisplayTime;
-	private TimePicker timePicker1;
-	private Button btnChangeTime;
-
 	private String date;
+	private String time;
 
 	private Calendar cal;
 	private int day;
 	private int month;
 	private int year;
+	private int hour;
+	private int min;
+
+	private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+		public void onDateSet(DatePicker view, int selectedYear,
+				int selectedMonth, int selectedDay) {
+			date = selectedDay + " / " + (selectedMonth + 1) + " / "
+					+ selectedYear;
+			textViewAddDate.setText(date);
+		}
+	};
+
+	private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
+		@Override
+		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+			int hour;
+			String am_pm;
+			if (hourOfDay > 12) {
+				hour = hourOfDay - 12;
+				am_pm = "PM";
+			} else {
+				hour = hourOfDay;
+				am_pm = "AM";
+			}
+			time = hour + " : " + minute + " " + am_pm;
+			textViewAddTime.setText(time);
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,14 +98,18 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 
 		ImageView imageViewSave = (ImageView) findViewById(R.id.imageViewSave);
 		imageViewSave.setOnClickListener(this);
-		
-		editTextDateAdd = (EditText) findViewById(R.id.editTextDateAdd);
-		editTextTimeAdd = (EditText) findViewById(R.id.editTextTimeAdd);
-		
-		imageViewDateAdd = (ImageView) findViewById(R.id.imageViewAddDate);
-		imageViewDateAdd.setOnClickListener(this);
-		imageViewTimeAdd = (ImageView) findViewById(R.id.imageViewAddTime);
-		imageViewTimeAdd.setOnClickListener(this);
+
+		imageViewDeleteReminder = (ImageView) findViewById(R.id.imageViewDeleteReminder);
+		imageViewDeleteReminder.setOnClickListener(this);
+
+		imageViewAddDate = (ImageView) findViewById(R.id.imageViewAddDate);
+		imageViewAddDate.setOnClickListener(this);
+		imageViewAddTime = (ImageView) findViewById(R.id.imageViewAddTime);
+		imageViewAddTime.setOnClickListener(this);
+
+		textViewAddDate = (TextView) findViewById(R.id.textViewAddDate);
+		textViewAddTime = (TextView) findViewById(R.id.textViewAddTime);
+		textViewremindMeAt = (TextView) findViewById(R.id.textViewRemindMeAt);
 
 		editTextTitle = (EditText) findViewById(R.id.editTextTitle);
 		editTextText = (EditText) findViewById(R.id.editTextText);
@@ -89,6 +121,10 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 
 		ActionBar bar = getActionBar();
 		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(255, 165, 0)));
+
+		cal = Calendar.getInstance();
+		hour = cal.get(Calendar.HOUR_OF_DAY);
+		min = cal.get(Calendar.MINUTE);
 	}
 
 	@Override
@@ -101,40 +137,54 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 			finish();
 			break;
 		case R.id.imageViewPhoto:
-
+			Intent i = new Intent(this, TakePictureActivity.class);
+			startActivity(i);
 			break;
 		case R.id.imageViewReminder:
-			
-			if (editTextDateAdd.getVisibility() == View.GONE) {
-				editTextDateAdd.setVisibility(View.VISIBLE);
-				imageViewDateAdd.setVisibility(View.VISIBLE);
-				editTextTimeAdd.setVisibility(View.VISIBLE);
-				imageViewTimeAdd.setVisibility(View.VISIBLE);
+
+			if (imageViewAddDate.getVisibility() == View.GONE) {
+				imageViewAddDate.setVisibility(View.VISIBLE);
+				imageViewAddTime.setVisibility(View.VISIBLE);
+				textViewAddDate.setVisibility(View.VISIBLE);
+				textViewAddTime.setVisibility(View.VISIBLE);
+				textViewremindMeAt.setVisibility(View.VISIBLE);
+				imageViewDeleteReminder.setVisibility(View.VISIBLE);
 			} else {
-				editTextDateAdd.setVisibility(View.GONE);
-				imageViewDateAdd.setVisibility(View.GONE);
-				editTextTimeAdd.setVisibility(View.GONE);
-				imageViewTimeAdd.setVisibility(View.GONE);
+				imageViewAddDate.setVisibility(View.GONE);
+				imageViewAddTime.setVisibility(View.GONE);
+				textViewAddDate.setVisibility(View.GONE);
+				textViewAddTime.setVisibility(View.GONE);
+				textViewremindMeAt.setVisibility(View.GONE);
+				imageViewDeleteReminder.setVisibility(View.GONE);
 			}
 
 			break;
 		case R.id.imageViewAddDate:
 			showDialog(0);
+			break;
+
+		case R.id.imageViewAddTime:
+			showDialog(1);
+			break;
+		case R.id.imageViewDeleteReminder:
+			textViewAddDate.setText("");
+			textViewAddTime.setText("");
+			break;
 		}
+
 	}
 
 	@Override
 	@Deprecated
 	protected Dialog onCreateDialog(int id) {
-		return new DatePickerDialog(this, datePickerListener, year, month, day);
-	}
-
-	private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-		public void onDateSet(DatePicker view, int selectedYear,
-				int selectedMonth, int selectedDay) {
-			date = selectedDay + " / " + (selectedMonth + 1) + " / "
-					+ selectedYear;
+		if (id == 0) {
+			return new DatePickerDialog(this, datePickerListener, year, month,
+					day);
+		} else if (id == 1) {
+			return new TimePickerDialog(this, timePickerListener, hour, min,
+					false);
 		}
-	};
+		return null;
+	}
 
 }

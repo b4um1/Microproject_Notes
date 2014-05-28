@@ -20,8 +20,9 @@
                 android:id="@+id/textViewTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Titel"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:text="Titel:"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="40sp" />
 
             <EditText
                 android:id="@+id/editTextTitle"
@@ -39,8 +40,9 @@
             android:id="@+id/textViewText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:text="Text:"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="40sp" />
 
         <EditText
             android:id="@+id/editTextText"
@@ -79,43 +81,74 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
-                <EditText
-                    android:id="@+id/editTextDateAdd"
+                <TextView
+                    android:id="@+id/textViewRemindMeAt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:ems="10"
-                    android:inputType="date"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.9"
+                    android:text="Remind me at"
+                    android:textAlignment="gravity"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="30sp"
                     android:visibility="gone" />
 
                 <ImageView
-                    android:id="@+id/imageViewAddDate"
+                    android:id="@+id/imageViewDeleteReminder"
                     android:layout_width="wrap_content"
-                    android:layout_height="70dp"
-                    android:layout_weight="0.5"
-                    android:src="@drawable/date"
+                    android:layout_height="50dp"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/ic_menu_delete"
                     android:visibility="gone" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="0dp"
+                android:layout_weight="1" >
 
-                <EditText
-                    android:id="@+id/editTextTimeAdd"
+                <ImageView
+                    android:id="@+id/imageViewAddDate"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_weight="0.5"
-                    android:ems="10"
-                    android:inputType="time"
+                    android:src="@drawable/date"
                     android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/imageViewAddTime"
-                    android:layout_width="203dp"
-                    android:layout_height="52dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_weight="0.5"
                     android:src="@drawable/time"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:baselineAligned="false" >
+
+                <TextView
+                    android:id="@+id/textViewAddDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
+                    android:textAlignment="center"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/textViewAddTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
+                    android:textAlignment="center"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:visibility="gone" />
 
             </LinearLayout>
@@ -124,7 +157,7 @@
 
         <ImageView
             android:id="@+id/imageViewSave"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
             android:src="@drawable/save_button" />
 
