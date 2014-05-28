@@ -9,7 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import at.fh.ooe.mc.android.Note;
+import at.fh.ooe.mc.android.model.Note;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -18,10 +18,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String KEY_TITLE = "notetitle";
 	public static final String KEY_MESSAGE = "notemessage";
 	public static final String KEY_DATE = "notedate";
-	private static final String[] COLUMNS = {KEY_ROWID,KEY_TITLE,KEY_MESSAGE, KEY_DATE};
-	
+	public static final String KEY_PICLINK = "notepiclink";
+
+	private static final String[] COLUMNS = { KEY_ROWID, KEY_TITLE,
+			KEY_MESSAGE, KEY_DATE, KEY_PICLINK };
+
 	public static final String DATABASE_NAME = "notesdb";
-	public static final String DATABASE_TABLE = "TextNote";
+	public static final String DATABASE_TABLE = "Notes";
 	public static final int DATABASE_VERSION = 1;
 
 	public DatabaseHelper(Context context) {
@@ -31,12 +34,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-
-		String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS "
+		Log.i(LOG_TAG, "pn create");
+		String CREATE_NOTES_TABLE = "CREATE TABLE IF NOT EXISTS "
 				+ DATABASE_TABLE + "(" + KEY_ROWID
 				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_TITLE
-				+ " TEXT, " + KEY_MESSAGE + " TEXT, " + KEY_DATE + " TEXT  )";
-		db.execSQL(CREATE_CONTACTS_TABLE);
+				+ " TEXT, " + KEY_MESSAGE + " TEXT, " + KEY_DATE + " TEXT, "
+				+ KEY_PICLINK + " TEXT  )";
+		db.execSQL(CREATE_NOTES_TABLE);
 	}
 
 	@Override
@@ -54,7 +58,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		// 2. create ContentValues to add key "column"/value
 		ContentValues values = new ContentValues();
 		values.put(KEY_TITLE, note.getTitle()); // get title
-		values.put(KEY_MESSAGE, note.getText()); // get author
+		values.put(KEY_MESSAGE, note.getText()); // get message
+		values.put(KEY_DATE, note.getDate()); // get date string
+		values.put(KEY_PICLINK, note.getPic_link()); // get pic link
 
 		// 3. insert
 		db.insert(DATABASE_TABLE, // table
@@ -65,38 +71,63 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		// 4. close
 		db.close();
 	}
-	
-	public Note getNote(int id){
-		 
-	    // 1. get reference to readable DB
-	    SQLiteDatabase db = this.getReadableDatabase();
-	 
-	    // 2. build query
-	    Cursor cursor = 
-	            db.query(DATABASE_TABLE, // a. table
-	            COLUMNS, // b. column names
-	            " _id = ?", // c. selections 
-	            new String[] { String.valueOf(id) }, // d. selections args
-	            null, // e. group by
-	            null, // f. having
-	            null, // g. order by
-	            null); // h. limit
-	 
-	    // 3. if we got results get the first one
-	    if (cursor != null)
-	        cursor.moveToFirst();
-	 
-	    // 4. build note object
-	    Note note = new Note();
-	    note.setId(Integer.parseInt(cursor.getString(0)));
-	    note.setTitle(cursor.getString(1));
-	    note.setText(cursor.getString(2));
-	 
-	    //log 
-	Log.d("getBook("+id+")", note.toString());
-	 
-	    // 5. return note
-	    return note;
+
+	public int updateBook(Note note) {
+
+		// 1. get reference to writable DB
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		// 2. create ContentValues to add key "column"/value
+		ContentValues values = new ContentValues();
+		values.put(KEY_TITLE, note.getTitle()); // get title
+		values.put(KEY_MESSAGE, note.getText()); // get message
+		values.put(KEY_DATE, note.getDate()); // get date string
+		values.put(KEY_PICLINK, note.getPic_link()); // get pic link
+
+		// 3. updating row
+		int i = db.update(DATABASE_TABLE, // table
+				values, // column/value
+				KEY_ROWID + " = ?", // selections
+				new String[] { String.valueOf(note.getId()) }); // selection
+																// args
+
+		// 4. close
+		db.close();
+
+		return i;
+
+	}
+
+	public Note getNote(int id) {
+
+		// 1. get reference to readable DB
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		// 2. build query
+		Cursor cursor = db.query(DATABASE_TABLE, // a. table
+				COLUMNS, // b. column names
+				" _id = ?", // c. selections
+				new String[] { String.valueOf(id) }, // d. selections args
+				null, // e. group by
+				null, // f. having
+				null, // g. order by
+				null); // h. limit
+
+		// 3. if we got results get the first one
+		if (cursor != null)
+			cursor.moveToFirst();
+
+		// 4. build note object
+		Note note = new Note();
+		note.setId(Integer.parseInt(cursor.getString(0)));
+		note.setTitle(cursor.getString(1));
+		note.setText(cursor.getString(2));
+
+		// log
+		Log.d("getBook(" + id + ")", note.toString());
+
+		// 5. return note
+		return note;
 	}
 
 	// Get All Notes
@@ -118,6 +149,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				note.setId(Integer.parseInt(cursor.getString(0)));
 				note.setTitle(cursor.getString(1));
 				note.setText(cursor.getString(2));
+				note.setDate(cursor.getString(3));
+				note.setPic_link(cursor.getString(4));
 
 				// Add book to books
 				notes.add(note);

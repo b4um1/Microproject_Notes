@@ -34,6 +34,7 @@ import android.os.Build;
 import at.fh.ooe.mc.androi.R;
 import at.fh.ooe.mc.androi.R.layout;
 import at.fh.ooe.mc.android.database.DatabaseHelper;
+import at.fh.ooe.mc.android.model.Note;
 
 public class AddNoteActivity extends Activity implements OnClickListener {
 
