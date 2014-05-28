@@ -37,6 +37,10 @@
             android:name="at.fh.ooe.mc.android.TakePictureActivity"
             android:label="@string/title_activity_take_picture" >
         </activity>
+        <activity
+            android:name="at.fh.ooe.mc.android.ShowSpecialNote"
+            android:label="@string/title_activity_show_special_note" >
+        </activity>
     </application>
 
 </manifest>
