@@ -1,6 +1,8 @@
 package at.fh.ooe.mc.android;
 
+import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -27,6 +29,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 import android.os.Build;
 import at.fh.ooe.mc.androi.R;
 import at.fh.ooe.mc.androi.R.layout;
@@ -44,6 +47,8 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 	ImageView imageViewAddDate;
 	ImageView imageViewAddTime;
 
+	ImageView imageViewPhoto;
+
 	ImageView imageViewDeleteReminder;
 
 	TimePicker timePicker;
@@ -59,11 +64,19 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 	private int hour;
 	private int min;
 
+	private int selectedDay;
+	private int selectedMonth;
+	private int selectedYear;
+	private int selectedHour;
+	private int selectedMin;
+
 	private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-		public void onDateSet(DatePicker view, int selectedYear,
-				int selectedMonth, int selectedDay) {
-			date = selectedDay + " / " + (selectedMonth + 1) + " / "
-					+ selectedYear;
+		public void onDateSet(DatePicker view, int selYear, int selMonth,
+				int selDay) {
+			selectedDay = selDay;
+			selectedMonth = selMonth + 1;
+			selectedYear = selYear;
+			date = selDay + " / " + (selMonth + 1) + " / " + selYear;
 			textViewAddDate.setText(date);
 		}
 	};
@@ -71,16 +84,18 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 	private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-			int hour;
+			int h;
 			String am_pm;
 			if (hourOfDay > 12) {
-				hour = hourOfDay - 12;
+				h = hourOfDay - 12;
 				am_pm = "PM";
 			} else {
-				hour = hourOfDay;
+				h = hourOfDay;
 				am_pm = "AM";
 			}
-			time = hour + " : " + minute + " " + am_pm;
+			time = h + " : " + minute + " " + am_pm;
+			selectedHour = h;
+			selectedMin = minute;
 			textViewAddTime.setText(time);
 		}
 	};
@@ -90,7 +105,7 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_note);
 
-		ImageView imageViewPhoto = (ImageView) findViewById(R.id.imageViewPhoto);
+		imageViewPhoto = (ImageView) findViewById(R.id.imageViewPhoto);
 		imageViewPhoto.setOnClickListener(this);
 
 		ImageView imageViewReminder = (ImageView) findViewById(R.id.imageViewReminder);
@@ -114,15 +129,13 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 		editTextTitle = (EditText) findViewById(R.id.editTextTitle);
 		editTextText = (EditText) findViewById(R.id.editTextText);
 
-		cal = Calendar.getInstance();
-		day = cal.get(Calendar.DAY_OF_MONTH);
-		month = cal.get(Calendar.MONTH);
-		year = cal.get(Calendar.YEAR);
-
 		ActionBar bar = getActionBar();
 		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(255, 165, 0)));
 
 		cal = Calendar.getInstance();
+		day = cal.get(Calendar.DAY_OF_MONTH);
+		month = cal.get(Calendar.MONTH);
+		year = cal.get(Calendar.YEAR);
 		hour = cal.get(Calendar.HOUR_OF_DAY);
 		min = cal.get(Calendar.MINUTE);
 	}
@@ -131,10 +144,77 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 	public void onClick(View _v) {
 		switch (_v.getId()) {
 		case R.id.imageViewSave:
-			DatabaseHelper helper = new DatabaseHelper(this);
-			helper.addNote(new Note(editTextTitle.getText().toString(),
-					editTextText.getText().toString()));
-			finish();
+
+			if (textViewAddDate.getText().equals("")
+					^ textViewAddTime.getText().equals("")) {
+				Toast.makeText(
+						this,
+						"Please set Date AND Time at the reminder before you save the note!",
+						2000).show();
+			} else {
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(new Date()); // heute
+				int currentYear = cal.get(Calendar.YEAR);
+				int currentMonth = cal.get(Calendar.MONTH) + 1;
+				int currentDay = cal.get(Calendar.DAY_OF_MONTH);
+				int currentHour = cal.get(Calendar.HOUR);
+				int currentMinute = cal.get(Calendar.MINUTE);
+				int currentAMPM = cal.get(Calendar.AM_PM);
+
+				boolean isPast = false;
+				boolean sameDate = false;
+
+				if (selectedYear < currentYear) {
+					isPast = true;
+				} else {
+					if (selectedYear == currentYear) {
+						if (selectedMonth < currentMonth) {
+							isPast = true;
+						} else {
+							if (selectedMonth == currentMonth) {
+								if (selectedDay < currentDay) {
+									isPast = true;
+								} else {
+									if (selectedDay == currentDay) {
+										sameDate = true;
+									}
+								}
+							}
+						}
+					}
+				}
+
+				if (!isPast) {
+					if (sameDate) {
+						sameDate = false;
+						if (selectedHour < currentHour) {
+							isPast = true;
+						} else {
+							if (selectedHour == currentHour) {
+								if (selectedMin < currentMinute) {
+									isPast = true;
+								} else {
+									if (selectedMin == currentMinute) {
+										sameDate = true;
+									}
+								}
+							}
+						}
+					}
+				}
+
+				if (isPast || sameDate) {
+					Toast.makeText(
+							this,
+							"The Date for the reminder have to be in the future!",
+							2000).show();
+				} else {
+					DatabaseHelper helper = new DatabaseHelper(this);
+					helper.addNote(new Note(editTextTitle.getText().toString(),
+							editTextText.getText().toString()));
+					finish();
+				}
+			}
 			break;
 		case R.id.imageViewPhoto:
 			Intent i = new Intent(this, TakePictureActivity.class);
@@ -149,6 +229,8 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 				textViewAddTime.setVisibility(View.VISIBLE);
 				textViewremindMeAt.setVisibility(View.VISIBLE);
 				imageViewDeleteReminder.setVisibility(View.VISIBLE);
+
+				imageViewPhoto.setVisibility(View.GONE);
 			} else {
 				imageViewAddDate.setVisibility(View.GONE);
 				imageViewAddTime.setVisibility(View.GONE);
@@ -156,6 +238,8 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 				textViewAddTime.setVisibility(View.GONE);
 				textViewremindMeAt.setVisibility(View.GONE);
 				imageViewDeleteReminder.setVisibility(View.GONE);
+
+				imageViewPhoto.setVisibility(View.VISIBLE);
 			}
 
 			break;

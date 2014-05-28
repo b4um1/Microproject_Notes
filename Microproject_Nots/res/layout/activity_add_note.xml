@@ -3,7 +3,6 @@
     android:id="@+id/container_addnote"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_grey"
     tools:context="at.fh.ooe.mc.android.AddNoteActivity"
     tools:ignore="MergeRootFrame" >
 
@@ -58,14 +57,14 @@
 
             <ImageView
                 android:id="@+id/imageViewPhoto"
-                android:layout_width="115dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.50"
                 android:src="@drawable/photo" />
 
             <ImageView
                 android:id="@+id/imageViewReminder"
-                android:layout_width="111dp"
+                android:layout_width="match_parent"
                 android:layout_height="111dp"
                 android:layout_weight="0.5"
                 android:src="@drawable/reminder" />
