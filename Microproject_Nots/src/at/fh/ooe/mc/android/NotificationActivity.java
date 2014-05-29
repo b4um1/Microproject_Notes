@@ -24,24 +24,22 @@ import at.fh.ooe.mc.androi.R.menu;
 
 public class NotificationActivity extends Activity {
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_notification);
-
-		MediaPlayer mp=MediaPlayer.create(this, R.raw.a);
-		mp.start();
 		
+		MediaPlayer mp = MediaPlayer.create(this, R.raw.a);
+		mp.start();
+
 		AlertDialog.Builder dialogB = new AlertDialog.Builder(this);
 		dialogB.setMessage("a dialog test");
-		dialogB.setNeutralButton("exit",
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface _dialog, int _which) {
-						_dialog.dismiss();
-					}
-				});
+		dialogB.setNeutralButton("exit", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface _dialog, int _which) {
+				_dialog.dismiss();
+			}
+		});
 		dialogB.show();
 	}
 }

@@ -49,6 +49,12 @@
             android:name="at.fh.ooe.mc.android.NotificationActivity"
             android:label="@string/title_activity_notification" >
         </activity>
+
+        <receiver
+            android:name=".MyNotification"
+            android:enabled="true"
+            android:exported="false" >
+        </receiver>
     </application>
 
 </manifest>

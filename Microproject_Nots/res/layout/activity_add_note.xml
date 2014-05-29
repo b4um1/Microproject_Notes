@@ -3,6 +3,7 @@
     android:id="@+id/container_addnote"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_detail"
     tools:context="at.fh.ooe.mc.android.AddNoteActivity"
     tools:ignore="MergeRootFrame" >
 
@@ -11,37 +12,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/textViewTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Titel:"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="40sp" />
-
-            <EditText
-                android:id="@+id/editTextTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10" >
-
-                <requestFocus />
-            </EditText>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textViewText"
+        <EditText
+            android:id="@+id/editTextTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Text:"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="40sp" />
+            android:ems="10"
+            android:textColor="#2a2a2a"
+            android:textSize="40sp"
+            android:textStyle="bold" >
+
+            <requestFocus />
+        </EditText>
 
         <EditText
             android:id="@+id/editTextText"
@@ -49,25 +30,27 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.63"
             android:ems="10"
-            android:gravity="top" />
+            android:gravity="top"
+            android:textColor="#2a2a2a"
+            android:textSize="35sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="65dp" >
 
             <ImageView
                 android:id="@+id/imageViewPhoto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.50"
-                android:src="@drawable/photo" />
+                android:layout_weight="0.5"
+                android:src="@drawable/camer_icon_white" />
 
             <ImageView
                 android:id="@+id/imageViewReminder"
                 android:layout_width="match_parent"
-                android:layout_height="111dp"
+                android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:src="@drawable/reminder" />
+                android:src="@drawable/alarm_cloc_white" />
 
         </LinearLayout>
 
