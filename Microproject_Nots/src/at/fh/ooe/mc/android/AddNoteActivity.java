@@ -153,6 +153,9 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 				.createFromAsset(getAssets(), "fonts/GoodDog.otf");
 		editTextTitle.setTypeface(tf);
 		editTextText.setTypeface(tf);
+		
+		Button buttonShowImage = (Button) findViewById(R.id.buttonShowImage);
+		buttonShowImage.setOnClickListener(this);
 
 		ActionBar bar = getActionBar();
 		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(107, 66, 38)));
@@ -289,6 +292,12 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View _v) {
 		switch (_v.getId()) {
+		case R.id.buttonShowImage:
+			ImageView imageView = (ImageView) findViewById(R.id.imageView);
+			Bitmap bmp = BitmapFactory
+					.decodeFile("/storage/emulated/0/Pictures/notes/IMG_actual.jpg");
+			imageView.setImageBitmap(bmp);
+			break;
 		case R.id.imageViewSave:
 			saveContent();
 
@@ -297,11 +306,7 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 			Intent i = new Intent(this, TakePictureActivity.class);
 			startActivity(i);
 
-//			ImageView imageView = (ImageView) findViewById(R.id.imageView);
-//			Bitmap bmp = BitmapFactory
-//					.decodeFile("/storage/emulated/0/Pictures/notes/IMG_"
-//							+ imeStamp + ".jpg");
-//			imageView.setImageBitmap(bmp);
+
 			
 			break;
 		case R.id.imageViewReminder:
@@ -353,5 +358,9 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 					false);
 		}
 		return null;
+	}
+	
+	public static void getTimeStamp(String timeStamp) {
+		mTimeStamp = timeStamp;
 	}
 }

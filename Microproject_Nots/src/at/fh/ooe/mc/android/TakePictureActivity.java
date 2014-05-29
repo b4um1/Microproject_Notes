@@ -11,6 +11,8 @@ import java.util.Locale;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
@@ -38,6 +40,11 @@ public class TakePictureActivity extends Activity implements OnClickListener,
 	private static final String LOG_TAG = "take picture";
 
 	Camera mCam;
+	static String mTimeStamp;
+	
+	public static String getTimeStamp(){
+		return mTimeStamp;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +79,11 @@ public class TakePictureActivity extends Activity implements OnClickListener,
 		}
 		String timeStamp = new SimpleDateFormat("yyyMMdd_HHmmss",
 				Locale.getDefault()).format(new Date());
-		storageFile = new File(dir.getPath() + File.separator + "IMG_"
-				+ timeStamp + ".jpg");
+//		storageFile = new File(dir.getPath() + File.separator + "IMG_"
+//				+ timeStamp + ".jpg");
+		storageFile = new File(dir.getPath() + File.separator + "IMG_actual.jpg");
+		mTimeStamp = timeStamp;
+		
 		try {
 			FileOutputStream fos = new FileOutputStream(storageFile);
 			fos.write(_data);
@@ -84,7 +94,6 @@ public class TakePictureActivity extends Activity implements OnClickListener,
 		} catch (IOException _e) {
 			Log.e(LOG_TAG, "I/O error writing file: " + storageFile, _e);
 		}
-
 	}
 
 	/*
@@ -134,10 +143,6 @@ public class TakePictureActivity extends Activity implements OnClickListener,
 			storeImage(_data, "notes");
 			mCam.startPreview();
 		}
-
-		Toast.makeText(getApplicationContext(), "picture got taken", 1000)
-				.show();
-
 	}
 
 	@Override
@@ -148,6 +153,8 @@ public class TakePictureActivity extends Activity implements OnClickListener,
 					TakePictureActivity.this, 1, mCam);
 			mCam.setPreviewDisplay(_holder);
 			mCam.startPreview();
+			
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -173,5 +180,4 @@ public class TakePictureActivity extends Activity implements OnClickListener,
 		mCam.takePicture(this, this, this);
 		finish();
 	}
-
 }
