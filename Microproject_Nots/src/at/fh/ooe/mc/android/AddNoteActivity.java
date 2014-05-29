@@ -20,6 +20,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -83,6 +85,8 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 	private int selectedYear;
 	private int selectedHour;
 	private int selectedMin;
+
+	static String mTimeStamp;
 
 	AlarmManager mgr;
 
@@ -235,7 +239,6 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 						}
 					}
 				}
-
 			}
 
 			if (isPast || sameDate) {
@@ -249,21 +252,20 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 				note.setTitle(editTextTitle.getText().toString());
 				note.setText(editTextText.getText().toString());
 				if (reminderSet) {
-					
+
 					note.setDate(selectedDay + "/" + selectedMonth + "/"
 							+ selectedYear + "/" + selectedHour + "/"
 							+ selectedMin);
 					setReminder();
 				}
 				helper.addNote(note);
-
 				finish();
 			}
 		}
 
 	}
-	
-	public void setReminder(){
+
+	public void setReminder() {
 		Date dat = new Date();// initializes to now
 		Calendar cal_alarm = Calendar.getInstance();
 		Calendar cal_now = Calendar.getInstance();
@@ -280,9 +282,8 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 				NotificationActivity.class);
 		PendingIntent pi = PendingIntent.getActivity(this, 0, i, 0);
 
-		mgr.set(AlarmManager.RTC_WAKEUP,
-				cal_alarm.getTimeInMillis(), pi);
-		
+		mgr.set(AlarmManager.RTC_WAKEUP, cal_alarm.getTimeInMillis(), pi);
+
 	}
 
 	@Override
@@ -295,6 +296,13 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 		case R.id.imageViewPhoto:
 			Intent i = new Intent(this, TakePictureActivity.class);
 			startActivity(i);
+
+//			ImageView imageView = (ImageView) findViewById(R.id.imageView);
+//			Bitmap bmp = BitmapFactory
+//					.decodeFile("/storage/emulated/0/Pictures/notes/IMG_"
+//							+ imeStamp + ".jpg");
+//			imageView.setImageBitmap(bmp);
+			
 			break;
 		case R.id.imageViewReminder:
 
@@ -346,5 +354,4 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 		}
 		return null;
 	}
-
 }

@@ -27,17 +27,23 @@ public class NotificationActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_notification);
+		setContentView(R.layout.main_listview);
 		
 		MediaPlayer mp = MediaPlayer.create(this, R.raw.a);
 		mp.start();
 
 		AlertDialog.Builder dialogB = new AlertDialog.Builder(this);
-		dialogB.setMessage("a dialog test");
+		dialogB.setMessage("Reminder");
 		dialogB.setNeutralButton("exit", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface _dialog, int _which) {
 				_dialog.dismiss();
+			}
+		});
+		dialogB.setPositiveButton("show note", new DialogInterface.OnClickListener() {
+			@Override 
+			public void onClick(DialogInterface _dialog, int _which) {
+				
 			}
 		});
 		dialogB.show();

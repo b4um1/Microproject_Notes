@@ -171,7 +171,7 @@ public class TakePictureActivity extends Activity implements OnClickListener,
 	@Override
 	public void onClick(View _v) {
 		mCam.takePicture(this, this, this);
-
+		finish();
 	}
 
 }
