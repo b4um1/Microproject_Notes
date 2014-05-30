@@ -1,9 +1,11 @@
 package at.fh.ooe.mc.android;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -22,9 +24,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.media.DeniedByServerException;
 import android.media.MediaPlayer;
 import android.opengl.Visibility;
 import android.os.Bundle;
@@ -39,6 +44,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -52,7 +58,7 @@ import at.fh.ooe.mc.android.database.DatabaseHelper;
 import at.fh.ooe.mc.android.model.Note;
 
 public class AddNoteActivity extends Activity implements OnClickListener {
-	
+
 	public static final String ID = "NoteID";
 
 	EditText editTextTitle;
@@ -87,6 +93,9 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 	private int selectedYear;
 	private int selectedHour;
 	private int selectedMin;
+
+	boolean cameraOn = false;
+	boolean pictureTaken = false;
 
 	static String mTimeStamp;
 
@@ -155,9 +164,6 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 				.createFromAsset(getAssets(), "fonts/GoodDog.otf");
 		editTextTitle.setTypeface(tf);
 		editTextText.setTypeface(tf);
-		
-		Button buttonShowImage = (Button) findViewById(R.id.buttonShowImage);
-		buttonShowImage.setOnClickListener(this);
 
 		ActionBar bar = getActionBar();
 		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(107, 66, 38)));
@@ -177,6 +183,27 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 		min = cal.get(Calendar.MINUTE);
 
 		mgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+	}
+
+	public void onResume() {
+		super.onResume();
+
+		if (cameraOn) {
+
+			mTimeStamp = new SimpleDateFormat("yyyMMdd_HHmm",
+					Locale.getDefault()).format(new Date());
+			Bitmap bmp = BitmapFactory
+					.decodeFile("/storage/emulated/0/Pictures/notes/IMG_"
+							+ mTimeStamp + ".jpg");
+
+			editTextText.setBackgroundDrawable(new BitmapDrawable(bmp));
+			editTextText.setTextColor(Color.WHITE);
+			
+			pictureTaken = true;
+			
+		}
+		cameraOn = false;
+
 	}
 
 	public void saveContent() {
@@ -251,6 +278,7 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 						"The Date for the reminder have to be in the future!",
 						2000).show();
 			} else {
+				
 				DatabaseHelper helper = new DatabaseHelper(this);
 
 				Note note = new Note();
@@ -262,6 +290,10 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 							+ selectedYear + "/" + selectedHour + "/"
 							+ selectedMin);
 					setReminder();
+				}
+				if (pictureTaken) {
+					note.setPic_link("/storage/emulated/0/Pictures/notes/IMG_"
+							+ mTimeStamp + ".jpg");
 				}
 				helper.addNote(note);
 				finish();
@@ -294,21 +326,13 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View _v) {
 		switch (_v.getId()) {
-		case R.id.buttonShowImage:
-			ImageView imageView = (ImageView) findViewById(R.id.imageView);
-			
-			Bitmap bmp = BitmapFactory
-					.decodeFile("/storage/emulated/0/Pictures/notes/IMG_actual.jpg");
-			imageView.setImageBitmap(bmp);
-			
-			break;
 		case R.id.imageViewSave:
 			saveContent();
 			break;
 		case R.id.imageViewPhoto:
 			Intent i = new Intent(this, TakePictureActivity.class);
 			startActivity(i);
-			
+			cameraOn = true;
 			break;
 		case R.id.imageViewReminder:
 
@@ -360,7 +384,7 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 		}
 		return null;
 	}
-	
+
 	public static void getTimeStamp(String timeStamp) {
 		mTimeStamp = timeStamp;
 	}

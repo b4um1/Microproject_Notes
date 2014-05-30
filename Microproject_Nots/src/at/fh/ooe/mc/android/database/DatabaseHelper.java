@@ -122,6 +122,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		note.setId(Integer.parseInt(cursor.getString(0)));
 		note.setTitle(cursor.getString(1));
 		note.setText(cursor.getString(2));
+		note.setDate(cursor.getString(3));
+		note.setPic_link(cursor.getString(4));
 
 		// log
 		Log.d("getBook(" + id + ")", note.toString());

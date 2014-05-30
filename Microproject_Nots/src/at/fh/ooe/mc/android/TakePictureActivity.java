@@ -57,9 +57,6 @@ public class TakePictureActivity extends Activity implements OnClickListener,
 		surfaceHolder.addCallback(this);
 	}
 
-	/*
-	 * based on Juliet Kemp (How to Call the Camera in Android)
-	 */
 	public static void storeImage(byte[] _data, String _dirName) {
 		File storageFile = null;
 
@@ -73,7 +70,7 @@ public class TakePictureActivity extends Activity implements OnClickListener,
 				return;
 			}
 		}
-		String timeStamp = new SimpleDateFormat("yyyMMdd_HHmmss",
+		String timeStamp = new SimpleDateFormat("yyyMMdd_HHmm",
 				Locale.getDefault()).format(new Date());
 		storageFile = new File(dir.getPath() + File.separator + "IMG_"
 				+ timeStamp + ".jpg");
@@ -90,9 +87,6 @@ public class TakePictureActivity extends Activity implements OnClickListener,
 		}
 	}
 
-	/*
-	 * Source Google
-	 */
 	public static void setCameraDisplayOrientation(Activity activity,
 			int cameraId, android.hardware.Camera camera) {
 		android.hardware.Camera.CameraInfo info = new android.hardware.Camera.CameraInfo();
@@ -158,7 +152,6 @@ public class TakePictureActivity extends Activity implements OnClickListener,
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -172,6 +165,12 @@ public class TakePictureActivity extends Activity implements OnClickListener,
 	@Override
 	public void onClick(View _v) {
 		mCam.takePicture(this, this, this);
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		finish();
 	}
 }
