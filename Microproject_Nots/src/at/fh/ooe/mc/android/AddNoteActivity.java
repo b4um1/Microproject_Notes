@@ -26,6 +26,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -195,9 +199,10 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 			Bitmap bmp = BitmapFactory
 					.decodeFile("/storage/emulated/0/Pictures/notes/IMG_"
 							+ mTimeStamp + ".jpg");
-
+			
 			editTextText.setBackgroundDrawable(new BitmapDrawable(bmp));
 			editTextText.setTextColor(Color.WHITE);
+			
 			
 			pictureTaken = true;
 			
@@ -383,9 +388,5 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 					false);
 		}
 		return null;
-	}
-
-	public static void getTimeStamp(String timeStamp) {
-		mTimeStamp = timeStamp;
 	}
 }
