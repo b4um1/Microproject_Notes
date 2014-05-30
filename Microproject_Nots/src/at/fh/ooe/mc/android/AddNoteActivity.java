@@ -52,6 +52,8 @@ import at.fh.ooe.mc.android.database.DatabaseHelper;
 import at.fh.ooe.mc.android.model.Note;
 
 public class AddNoteActivity extends Activity implements OnClickListener {
+	
+	public static final String ID = "NoteID";
 
 	EditText editTextTitle;
 	EditText editTextText;
@@ -294,19 +296,18 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 		switch (_v.getId()) {
 		case R.id.buttonShowImage:
 			ImageView imageView = (ImageView) findViewById(R.id.imageView);
+			
 			Bitmap bmp = BitmapFactory
 					.decodeFile("/storage/emulated/0/Pictures/notes/IMG_actual.jpg");
 			imageView.setImageBitmap(bmp);
+			
 			break;
 		case R.id.imageViewSave:
 			saveContent();
-
 			break;
 		case R.id.imageViewPhoto:
 			Intent i = new Intent(this, TakePictureActivity.class);
 			startActivity(i);
-
-
 			
 			break;
 		case R.id.imageViewReminder:

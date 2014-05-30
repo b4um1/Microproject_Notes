@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -40,11 +41,6 @@ public class TakePictureActivity extends Activity implements OnClickListener,
 	private static final String LOG_TAG = "take picture";
 
 	Camera mCam;
-	static String mTimeStamp;
-	
-	public static String getTimeStamp(){
-		return mTimeStamp;
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +75,9 @@ public class TakePictureActivity extends Activity implements OnClickListener,
 		}
 		String timeStamp = new SimpleDateFormat("yyyMMdd_HHmmss",
 				Locale.getDefault()).format(new Date());
-//		storageFile = new File(dir.getPath() + File.separator + "IMG_"
-//				+ timeStamp + ".jpg");
-		storageFile = new File(dir.getPath() + File.separator + "IMG_actual.jpg");
-		mTimeStamp = timeStamp;
-		
+		storageFile = new File(dir.getPath() + File.separator + "IMG_"
+				+ timeStamp + ".jpg");
+				
 		try {
 			FileOutputStream fos = new FileOutputStream(storageFile);
 			fos.write(_data);
