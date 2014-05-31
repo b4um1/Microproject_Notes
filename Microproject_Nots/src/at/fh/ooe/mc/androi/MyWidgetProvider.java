@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 import at.fh.ooe.mc.androi.R;
 
 public class MyWidgetProvider extends AppWidgetProvider{
@@ -17,9 +18,10 @@ public class MyWidgetProvider extends AppWidgetProvider{
 			int[] appWidgetIds) {
 
 		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget);
-		remoteViews.setOnClickPendingIntent(R.id.button_widget, buildButtonPendingIntent(context));
+		remoteViews.setOnClickPendingIntent(R.id.imageViewWidgetNext, buildButtonPendingIntent(context));
 		
-		remoteViews.setTextViewText(R.id.textViewWidget, "widget");
+		remoteViews.setTextViewText(R.id.textViewWidgetTitle, "Power Note");
+		remoteViews.setTextViewText(R.id.textViewWidgetText, "");
 		
 		pushWidgetUpdate(context, remoteViews);
 	}
