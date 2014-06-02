@@ -61,12 +61,12 @@ class MyArrayAdapter extends ArrayAdapter<Note> {
 			v = (TextView) _convertView.findViewById(R.id.textView_message_prev);
 			v.setSingleLine(true);
 			v.setText(element.getText());
-			v = (TextView) _convertView.findViewById(R.id.textViewDate);
-			if (element.getDate()==null){
-				v.setVisibility(TextView.INVISIBLE);
-			}else{
-				v.setText(element.getDate());				
-			}
+//			v = (TextView) _convertView.findViewById(R.id.textViewDate);
+//			if (element.getDate()==null){
+//				v.setVisibility(TextView.INVISIBLE);
+//			}else{
+//				v.setText(element.getDate());				
+//			}
 			
 			ImageView image = (ImageView) _convertView
 					.findViewById(R.id.imageView_delete);

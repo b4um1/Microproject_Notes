@@ -235,6 +235,10 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 				int currentMonth = cal.get(Calendar.MONTH) + 1;
 				int currentDay = cal.get(Calendar.DAY_OF_MONTH);
 				int currentHour = cal.get(Calendar.HOUR);
+				Toast.makeText(this, ""+currentHour, 2000).show();
+				if (currentHour == 0){
+					currentHour = 12;
+				}
 				int currentMinute = cal.get(Calendar.MINUTE);
 				int currentAMPM = cal.get(Calendar.AM_PM);
 
@@ -362,17 +366,17 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 			}
 
 			break;
-		case R.id.imageViewAddDate:
-			showDialog(0);
-			break;
-
-		case R.id.imageViewAddTime:
-			showDialog(1);
-			break;
-		case R.id.imageViewDeleteReminder:
-			textViewAddDate.setText("");
-			textViewAddTime.setText("");
-			break;
+//		case R.id.imageViewAddDate:
+//			showDialog(0);
+//			break;
+//
+//		case R.id.imageViewAddTime:
+//			showDialog(1);
+//			break;
+//		case R.id.imageViewDeleteReminder:
+//			textViewAddDate.setText("");
+//			textViewAddTime.setText("");
+//			break;
 		}
 
 	}

@@ -5,12 +5,10 @@
     android:background="#000000"
     tools:context="at.fh.ooe.mc.android.ShowPicActivity" >
 
-
-
     <ImageView
         android:id="@+id/imageViewShowPic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/background_detail" />
+        android:src="@drawable/background_detail_no_border" />
 
 </FrameLayout>

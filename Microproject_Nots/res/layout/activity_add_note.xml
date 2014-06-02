@@ -3,7 +3,7 @@
     android:id="@+id/container_addnote"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_detail"
+    android:background="@drawable/background_detail_no_border"
     tools:context="at.fh.ooe.mc.android.AddNoteActivity"
     tools:ignore="MergeRootFrame" >
 
@@ -34,6 +34,14 @@
             android:textColor="#2a2a2a"
             android:textSize="35sp" />
 
+        <ImageView
+            android:id="@+id/imageViewReminder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            android:src="@drawable/alarm_cloc_white"
+            android:visibility="gone" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="65dp" >
@@ -46,14 +54,15 @@
                 android:src="@drawable/camer_icon_white" />
 
             <ImageView
-                android:id="@+id/imageViewReminder"
+                android:id="@+id/imageViewSave"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="70dp"
                 android:layout_weight="0.1"
-                android:src="@drawable/alarm_cloc_white" />
+                android:src="@drawable/save_button" />
 
         </LinearLayout>
 
+        
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -137,11 +146,6 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imageViewSave"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:src="@drawable/save_button" />
 
     </LinearLayout>
 
