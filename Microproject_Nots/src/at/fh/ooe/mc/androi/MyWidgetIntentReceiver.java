@@ -34,6 +34,8 @@ public class MyWidgetIntentReceiver extends BroadcastReceiver {
 
 		remoteViews.setTextViewText(R.id.textViewWidgetTitle, getTextViewTitleToSet(context));
 
+		remoteViews.setImageViewBitmap(R.id.imageViewWidgetPic, getImageViewPicToSet(context));
+		
 		remoteViews.setTextViewText(R.id.textViewWidgetText, getTextViewTextToSet(context));
 		
 		// REMEMBER TO ALWAYS REFRESH YOUR BUTTON CLICK LISTENERS!!!

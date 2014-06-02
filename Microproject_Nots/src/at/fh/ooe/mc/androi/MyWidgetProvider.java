@@ -6,6 +6,8 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import at.fh.ooe.mc.androi.R;
