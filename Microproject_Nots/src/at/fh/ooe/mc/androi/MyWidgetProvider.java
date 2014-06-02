@@ -22,6 +22,7 @@ public class MyWidgetProvider extends AppWidgetProvider{
 		
 		remoteViews.setTextViewText(R.id.textViewWidgetTitle, "Power Note");
 		remoteViews.setTextViewText(R.id.textViewWidgetText, "");
+		//remoteViews.setImageViewBitmap(R.id.imageViewWidgetPic, null);
 		
 		pushWidgetUpdate(context, remoteViews);
 	}

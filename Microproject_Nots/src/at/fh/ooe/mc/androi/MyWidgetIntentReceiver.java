@@ -5,6 +5,9 @@ import java.util.List;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.MailTo;
 import android.widget.RemoteViews;
 import at.fh.ooe.mc.androi.R;
@@ -30,9 +33,9 @@ public class MyWidgetIntentReceiver extends BroadcastReceiver {
 				R.layout.widget);
 
 		remoteViews.setTextViewText(R.id.textViewWidgetTitle, getTextViewTitleToSet(context));
-		
-		remoteViews.setTextViewText(R.id.textViewWidgetText, getTextViewTextToSet(context));
 
+		remoteViews.setTextViewText(R.id.textViewWidgetText, getTextViewTextToSet(context));
+		
 		// REMEMBER TO ALWAYS REFRESH YOUR BUTTON CLICK LISTENERS!!!
 		remoteViews.setOnClickPendingIntent(R.id.imageViewWidgetNext,
 				MyWidgetProvider.buildButtonPendingIntent(context));
@@ -58,6 +61,15 @@ public class MyWidgetIntentReceiver extends BroadcastReceiver {
 		Note n = list.get(clickCount);
 		clickCount++;
 		return n.getText().toString();
+	}
+	
+	private Bitmap getImageViewPicToSet(Context context) {
+		mDb = new DatabaseHelper(context);
+		List<Note> list = mDb.getAllNotes();
+		Note n = list.get(clickCount);
+		Bitmap bmp = BitmapFactory.decodeFile(n.getPic_link());
+		
+		return bmp;
 	}
 
 }
