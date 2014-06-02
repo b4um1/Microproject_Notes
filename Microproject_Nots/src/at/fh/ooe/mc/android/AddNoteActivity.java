@@ -218,7 +218,7 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 				^ textViewAddTime.getText().equals("")) {
 			Toast.makeText(
 					this,
-					"Please set Date AND Time at the reminder before you save the note!",
+					"Please set Date AND Time before you save the note!",
 					2000).show();
 		} else {
 			boolean isPast = false;
@@ -280,7 +280,7 @@ public class AddNoteActivity extends Activity implements OnClickListener {
 
 			if (isPast || sameDate) {
 				Toast.makeText(this,
-						"The Date for the reminder have to be in the future!",
+						"The Date for the reminder has to be in the future!",
 						2000).show();
 			} else {
 				

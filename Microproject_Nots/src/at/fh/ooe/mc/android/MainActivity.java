@@ -48,7 +48,7 @@ public class MainActivity extends Activity implements OnItemClickListener {
 		mListView.setAdapter(mAdapter);
 
 		ActionBar bar = getActionBar();
-		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(255, 165, 0)));
+		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(107, 66, 38)));
 	}
 
 	@Override

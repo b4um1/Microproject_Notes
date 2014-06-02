@@ -13,5 +13,8 @@
     <string name="save">Speichern</string>
     <string name="cancel">Abbrechen</string>
     <string name="title_activity_notification">NotificationActivity</string>
+    <string name="title_activity_show_pic">ShowPicActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

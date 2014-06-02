@@ -3,10 +3,13 @@ package at.fh.ooe.mc.android;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector.OnGestureListener;
@@ -36,6 +39,8 @@ public class ShowSpecialNote extends Activity implements OnGestureListener,
 	private DatabaseHelper mDb;
 	private Note mNote;
 
+	ImageView imageViewPic;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,10 +72,14 @@ public class ShowSpecialNote extends Activity implements OnGestureListener,
 		view.setText(mNote.getText());
 		view.setTypeface(tf);
 
-		ImageView imageViewPic = (ImageView) findViewById(R.id.imageView_pic);
+		imageViewPic = (ImageView) findViewById(R.id.imageView_pic);
 		
 		Bitmap bmp = BitmapFactory.decodeFile(mNote.getPic_link());
 		imageViewPic.setImageDrawable(new BitmapDrawable(bmp));
+		imageViewPic.setOnClickListener(this);
+		
+		ActionBar bar = getActionBar();
+		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(107, 66, 38)));
 		
 	}
 
@@ -129,8 +138,15 @@ public class ShowSpecialNote extends Activity implements OnGestureListener,
 			mDb.updateBook(mNote);
 
 			finish();
+			break;
 		case R.id.button_ssn_cancel:
 			finish();
+			break;
+		case R.id.imageView_pic:
+			Intent i = new Intent(this, ShowPicActivity.class);
+			i.putExtra("piclink", mNote.getPic_link());
+			startActivity(i);
+			break;
 		}
 
 	}

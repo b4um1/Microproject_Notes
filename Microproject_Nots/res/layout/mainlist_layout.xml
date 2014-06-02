@@ -29,7 +29,7 @@
                     android:layout_weight="1"
                     android:text="Large Text"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#0EBFE9"
+                    android:textColor="#6b4226"
                     android:textStyle="bold" />
 
                 <TextView
@@ -40,7 +40,7 @@
                     android:layout_weight="1"
                     android:text="Small Text"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#cec5fa"
+                    android:textColor="#000000"
                     android:textStyle="italic" />
 
             </LinearLayout>
@@ -52,7 +52,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1.2"
                 android:text="date"
-                android:textColor="#cec5fa"
+                android:textColor="#000000"
                 android:textStyle="italic" />
 
             <ImageView

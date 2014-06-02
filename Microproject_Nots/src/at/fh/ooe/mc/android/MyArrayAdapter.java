@@ -76,7 +76,7 @@ class MyArrayAdapter extends ArrayAdapter<Note> {
 					Log.i(LOG_TAG, "try to delete " + element.getTitle());
 					mDb.delete(element.getId());
 					refill(mDb.getAllNotes());
-					Toast.makeText(getContext(), "Notiz wurde erfolgreich gelöscht", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getContext(), "The note was deleted", Toast.LENGTH_SHORT).show();
 				}
 
 			});
